@@ -1,2 +1,1 @@
-# sekkotuin_crm
-# sekkotuin-crm
+# 接骨院・治療院向けCRM（学習用）
