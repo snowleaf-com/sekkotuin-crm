@@ -5,7 +5,7 @@
 		"build": "vue-tsc && vite build",
 		"dev": "vite",
 		"format": "prettier --write .",
-    "type:check": "vue-tsc --noEmit"
+		"type:check": "vue-tsc --noEmit"
 	},
 	"devDependencies": {
 		"@prettier/plugin-php": "^0.22.2",
