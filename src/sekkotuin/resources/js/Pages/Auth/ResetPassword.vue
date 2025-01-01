@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import GuestLayout from '@/Layouts/GuestLayout.vue';
@@ -40,6 +39,7 @@ const submit = () => {
 					v-model="form.email"
 					type="email"
 					class="mt-1 block w-full"
+					icon="mdi-email"
 					required
 					autofocus
 					autocomplete="username"
@@ -55,6 +55,7 @@ const submit = () => {
 					id="password"
 					v-model="form.password"
 					type="password"
+					icon="mdi-lock"
 					class="mt-1 block w-full"
 					required
 					autocomplete="new-password"
@@ -70,6 +71,7 @@ const submit = () => {
 					id="password_confirmation"
 					v-model="form.password_confirmation"
 					type="password"
+					icon="mdi-lock"
 					class="mt-1 block w-full"
 					required
 					autocomplete="new-password"

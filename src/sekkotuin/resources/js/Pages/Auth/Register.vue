@@ -28,64 +28,67 @@ const submit = () => {
 
 		<form @submit.prevent="submit">
 			<div>
-				<InputLabel for="name" value="Name" />
-
 				<TextInput
+					label="名前"
 					id="name"
 					v-model="form.name"
 					type="text"
 					class="mt-1 block w-full"
+					icon="mdi-pen"
 					required
 					autofocus
 					autocomplete="name"
 				/>
 
-				<InputError class="mt-2" :message="form.errors.name" />
+				<InputError class="mb-6" :message="form.errors.name" />
 			</div>
 
-			<div class="mt-4">
-				<InputLabel for="email" value="Email" />
+			<div class="">
 
 				<TextInput
+					label="メールアドレス"
 					id="email"
 					v-model="form.email"
 					type="email"
+					icon="mdi-email"
 					class="mt-1 block w-full"
 					required
 					autocomplete="username"
 				/>
 
-				<InputError class="mt-2" :message="form.errors.email" />
+				<InputError class="mb-6" :message="form.errors.email" />
 			</div>
 
-			<div class="mt-4">
-				<InputLabel for="password" value="Password" />
+			<div class="">
 
 				<TextInput
+					label="パスワード"
 					id="password"
 					v-model="form.password"
 					type="password"
+					icon="mdi-lock"
 					class="mt-1 block w-full"
 					required
 					autocomplete="new-password"
 				/>
 
-				<InputError class="mt-2" :message="form.errors.password" />
+				<InputError class="mb-6" :message="form.errors.password" />
 			</div>
 
-			<div class="mt-4">
-				<InputLabel for="password_confirmation" value="Confirm Password" />
+			<div class="">
 
 				<TextInput
+					label="パスワード再入力"
 					id="password_confirmation"
 					v-model="form.password_confirmation"
 					type="password"
+					icon="mdi-lock"
 					class="mt-1 block w-full"
 					required
 					autocomplete="new-password"
 				/>
 
-				<InputError class="mt-2" :message="form.errors.password_confirmation" />
+				<InputError class="mb-6" :message="form.errors.password_confirmation" />
 			</div>
 
 			<div class="mt-4 flex items-center justify-end">
@@ -93,7 +96,7 @@ const submit = () => {
 					:href="route('login')"
 					class="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:text-gray-400 dark:hover:text-gray-100 dark:focus:ring-offset-gray-800"
 				>
-					Already registered?
+					登録済みの方はこちら
 				</Link>
 
 				<PrimaryButton
@@ -101,7 +104,7 @@ const submit = () => {
 					:class="{ 'opacity-25': form.processing }"
 					:disabled="form.processing"
 				>
-					Register
+					登録する
 				</PrimaryButton>
 			</div>
 		</form>

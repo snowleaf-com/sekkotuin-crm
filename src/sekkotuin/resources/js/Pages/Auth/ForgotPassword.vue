@@ -24,9 +24,7 @@ const submit = () => {
 		<Head title="Forgot Password" />
 
 		<div class="mb-4 text-sm text-gray-600 dark:text-gray-400">
-			Forgot your password? No problem. Just let us know your email address and
-			we will email you a password reset link that will allow you to choose a
-			new one.
+		メールアドレスをお知らせいただければ、新しいパスワードを選択できるパスワードリセットリンクをメールでお送りします。
 		</div>
 
 		<div
@@ -38,12 +36,13 @@ const submit = () => {
 
 		<form @submit.prevent="submit">
 			<div>
-				<InputLabel for="email" value="Email" />
 
 				<TextInput
 					id="email"
 					v-model="form.email"
 					type="email"
+					label="メールアドレス"
+					icon="mdi-email"
 					class="mt-1 block w-full"
 					required
 					autofocus
@@ -58,7 +57,7 @@ const submit = () => {
 					:class="{ 'opacity-25': form.processing }"
 					:disabled="form.processing"
 				>
-					Email Password Reset Link
+					送信する
 				</PrimaryButton>
 			</div>
 		</form>
