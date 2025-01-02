@@ -13,6 +13,17 @@ return new class extends Migration
     {
         Schema::create('customers', function (Blueprint $table) {
             $table->id();
+            $table->string('last_name');
+            $table->string('first_name');
+            $table->string('last_name_kana');
+            $table->string('first_name_kana');
+            $table->string('postcode');
+            $table->string('address');
+            $table->string('tel')->unique();
+            $table->date('birth');
+            $table->tinyInteger('gender');
+            $table->text('memo')->nullable();
+            $table->boolean('delete_flg')->default(0);
             $table->timestamps();
         });
     }
