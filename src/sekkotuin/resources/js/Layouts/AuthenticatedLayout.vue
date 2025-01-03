@@ -6,6 +6,7 @@ import { ref } from 'vue';
 const drawer = ref(false);
 const navigationLinks = [
 	{ name: 'Dashboard', route: route('dashboard'), icon: 'mdi-view-dashboard' },
+	{ name: '顧客関連', route: route('customers.index'), icon: 'mdi-account' },
 ];
 </script>
 
