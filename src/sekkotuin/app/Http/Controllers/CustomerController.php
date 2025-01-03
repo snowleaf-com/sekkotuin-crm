@@ -5,16 +5,28 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreCustomerRequest;
 use App\Http\Requests\UpdateCustomerRequest;
 use App\Models\Customer;
+use Inertia\Inertia;
+use Illuminate\Support\Facades\DB;
 
 class CustomerController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        //
-    }
+  public function index()
+  {
+    $customers = Customer::select(
+        'id',
+        DB::raw("CONCAT(last_name, ' ', first_name) AS full_name"),
+        DB::raw("CONCAT(last_name_kana, ' ', first_name_kana) AS full_name_kana"),
+        'created_at'
+      )->get();
+      /* TODO: historiesテーブルとリレーションし、最終来院日を渡す */
+    
+    return Inertia::render('Customers/Index', [
+      'customers' => $customers
+    ]);
+  }
 
     /**
      * Show the form for creating a new resource.
