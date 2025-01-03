@@ -23,14 +23,23 @@
 			</h2>
 		</template>
 
-  <v-container>
-    <v-row>
-      <v-col cols="12">
-        <v-data-table
-        :items="customers"
-        ></v-data-table>
-      </v-col>
-      </v-row>
-  </v-container>
+		<div class="">
+			<div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
+				<div
+					class="overflow-hidden bg-white shadow-sm sm:rounded-lg dark:bg-gray-800"
+				>
+          <v-container>
+            <v-row>
+              <v-col cols="12">
+                <v-data-table
+                  :items="customers"
+                >
+                </v-data-table>
+              </v-col>
+            </v-row>
+          </v-container>
+				</div>
+			</div>
+		</div>
 	</AuthenticatedLayout>
 </template>
