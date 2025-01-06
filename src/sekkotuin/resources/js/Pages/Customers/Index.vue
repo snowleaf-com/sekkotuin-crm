@@ -2,6 +2,7 @@
   import { onMounted } from 'vue';
   import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
   import { Head } from '@inertiajs/vue3';
+  import dayjs from 'dayjs';
   // import { DataTableHeader } from '@/types/vuetify';
 
   const props = defineProps<{
@@ -61,7 +62,7 @@
                       <td>{{ item.id }}</td>
                       <td class="text-right">{{ item.full_name }}</td>
                       <td class="text-right">{{ item.full_name_kana }}</td>
-                      <td class="text-right">{{ item.created_at }}</td>
+                      <td class="text-right">{{ dayjs(item.created_at).format("YYYY-MM-DD") }}</td>
                     </tr>
                   </tbody>
                 </v-table>
