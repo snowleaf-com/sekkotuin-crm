@@ -3,11 +3,14 @@
   import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
   import { Head } from '@inertiajs/vue3';
   import dayjs from 'dayjs';
+  import { LaravelPagination } from '@/types/laravel';
+  import Pagination from '@/Components/Pagination.vue';
+  
+  /* -------v-data-tableを使う場合--------- */
   // import { DataTableHeader } from '@/types/vuetify';
-
-  const props = defineProps<{
-    customers: {id: number, full_name: string, full_name_kana: string, created_at:string}[]
-  }>()
+  // const props = defineProps<{
+  //   customers: {id: number, full_name: string, full_name_kana: string, created_at:string}[]
+  // }>()
 
   // const headers:DataTableHeader[] = [
   //   { title: 'ID', key: 'id' },
@@ -15,6 +18,20 @@
   //   { title: 'かな', key: 'full_name_kana' },
   //   { title: '最終来院日', key: 'created_at' },
   // ];
+  /* -------v-data-tableを使う場合--------- */
+
+// customers のデータ構造を定義
+type Customer = {
+  id: number;
+  full_name: string;
+  full_name_kana: string;
+  created_at: string;
+};
+
+  // LaravelPagination<Customer> を使用
+  const props = defineProps<{
+    customers: LaravelPagination<Customer>;
+  }>();
 
   onMounted(() => {
     console.log(props.customers);
@@ -41,12 +58,14 @@
           <v-container>
             <v-row class="justify-center">
               <v-col cols="10">
-                <!-- <v-data-table
+                <!-- v-data-tableを使う場合---------
+                <v-data-table
                   :items="customers"
                   :headers="headers"
                   item-key="id"
                 >
-                </v-data-table> -->
+                </v-data-table> 
+                v-data-tableを使う場合----------->
                 <v-table density="compact">
                   <thead>
                     <tr>
@@ -58,7 +77,7 @@
                   </thead>
                   <tbody>
                     <tr
-                      v-for="item in customers" :key="item.id">
+                      v-for="item in customers.data" :key="item.id">
                       <td>{{ item.id }}</td>
                       <td class="text-right">{{ item.full_name }}</td>
                       <td class="text-right">{{ item.full_name_kana }}</td>
@@ -67,6 +86,7 @@
                   </tbody>
                 </v-table>
               </v-col>
+              <Pagination class="my-6" :links="customers.links" />
             </v-row>
           </v-container>
 				</div>

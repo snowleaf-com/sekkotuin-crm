@@ -20,11 +20,18 @@ class CustomerController extends Controller
         DB::raw("CONCAT(last_name, ' ', first_name) AS full_name"),
         DB::raw("CONCAT(last_name_kana, ' ', first_name_kana) AS full_name_kana"),
         'created_at'
-      )->get();
+    )->paginate(10);
+    // $customers2 = Customer::select(
+    //     'id',
+    //     DB::raw("CONCAT(last_name, ' ', first_name) AS full_name"),
+    //     DB::raw("CONCAT(last_name_kana, ' ', first_name_kana) AS full_name_kana"),
+    //     'created_at'
+    // )->get();
       /* TODO: historiesテーブルとリレーションし、最終来院日を渡す */
     
+    // dd($customers, $customers2);
     return Inertia::render('Customers/Index', [
-      'customers' => $customers
+      'customers' => $customers,
     ]);
   }
 
