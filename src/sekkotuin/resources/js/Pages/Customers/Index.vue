@@ -57,7 +57,7 @@ type Customer = {
 				>
           <v-container>
             <v-row class="justify-center">
-              <v-col cols="10">
+              <v-col cols="12" md="10" lg="10" xl="10">
                 <!-- v-data-tableを使う場合---------
                 <v-data-table
                   :items="customers"
