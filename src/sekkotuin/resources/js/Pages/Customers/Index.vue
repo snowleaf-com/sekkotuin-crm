@@ -1,10 +1,12 @@
 <script setup lang="ts">
   import { onMounted } from 'vue';
   import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-  import { Head } from '@inertiajs/vue3';
+  import { Head, Link } from '@inertiajs/vue3';
   import dayjs from 'dayjs';
   import { LaravelPagination } from '@/types/laravel';
   import Pagination from '@/Components/Pagination.vue';
+  import { ref } from 'vue';
+  import { Inertia } from '@inertiajs/inertia';
   
   /* -------v-data-tableを使う場合--------- */
   // import { DataTableHeader } from '@/types/vuetify';
@@ -20,18 +22,24 @@
   // ];
   /* -------v-data-tableを使う場合--------- */
 
-// customers のデータ構造を定義
-type Customer = {
-  id: number;
-  full_name: string;
-  full_name_kana: string;
-  created_at: string;
-};
+  // customers のデータ構造を定義
+  type Customer = {
+    id: number;
+    full_name: string;
+    full_name_kana: string;
+    created_at: string;
+  };
+
+  const searchKeyword = ref('');
 
   // LaravelPagination<Customer> を使用
   const props = defineProps<{
     customers: LaravelPagination<Customer>;
   }>();
+
+  const searchByName = () => {
+    Inertia.get(route('customers.index', { keyword: searchKeyword.value}))
+  }
 
   onMounted(() => {
     console.log(props.customers);
@@ -56,6 +64,31 @@ type Customer = {
 					class="overflow-hidden bg-white shadow-lg sm:rounded-lg dark:bg-gray-800"
 				>
           <v-container>
+            <v-row>
+              <v-col cols="1">
+
+              </v-col>
+              <v-col cols="3" class="d-flex">
+                <v-text-field
+                  density="compact"
+                  label="顧客検索"
+                  variant="solo"
+                  hide-details
+                  single-line
+                  v-model="searchKeyword"
+                >
+                <template #append-inner>
+                    <Link :href="route('customers.index', { keyword: searchKeyword})">
+                      <v-icon
+                        class="cursor-pointer"
+                      >
+                        mdi-magnify
+                      </v-icon>
+                    </Link>
+                  </template>
+                </v-text-field>
+              </v-col>
+            </v-row>
             <v-row class="justify-center">
               <v-col cols="12" md="10" lg="10" xl="10">
                 <!-- v-data-tableを使う場合---------

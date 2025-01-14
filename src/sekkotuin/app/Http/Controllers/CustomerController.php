@@ -7,29 +7,35 @@ use App\Http\Requests\UpdateCustomerRequest;
 use App\Models\Customer;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
 
 class CustomerController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-  public function index()
+  public function index(Request $request)
   {
-    $customers = Customer::select(
+    $keyword = $request->keyword ?? '';
+
+    $customers = Customer::searchByName($keyword)
+    ->select(
         'id',
         DB::raw("CONCAT(last_name, ' ', first_name) AS full_name"),
         DB::raw("CONCAT(last_name_kana, ' ', first_name_kana) AS full_name_kana"),
-        'created_at'
-    )->paginate(10);
+        'created_at')
+    ->paginate(10)
+    ->withQueryString();
     // $customers2 = Customer::select(
     //     'id',
     //     DB::raw("CONCAT(last_name, ' ', first_name) AS full_name"),
     //     DB::raw("CONCAT(last_name_kana, ' ', first_name_kana) AS full_name_kana"),
     //     'created_at'
     // )->get();
-      /* TODO: historiesテーブルとリレーションし、最終来院日を渡す */
     
-    // dd($customers, $customers2);
+    /* TODO: historiesテーブルとリレーションし、最終来院日を渡す */
+    
+    // dd($customers);
     return Inertia::render('Customers/Index', [
       'customers' => $customers,
     ]);
