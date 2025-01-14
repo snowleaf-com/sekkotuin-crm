@@ -1,12 +1,10 @@
 <script setup lang="ts">
   import { onMounted } from 'vue';
   import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-  import { Head, Link } from '@inertiajs/vue3';
+  import { Head, useForm } from '@inertiajs/vue3';
   import dayjs from 'dayjs';
   import { LaravelPagination } from '@/types/laravel';
   import Pagination from '@/Components/Pagination.vue';
-  import { ref } from 'vue';
-  import { Inertia } from '@inertiajs/inertia';
   
   /* -------v-data-tableを使う場合--------- */
   // import { DataTableHeader } from '@/types/vuetify';
@@ -30,19 +28,26 @@
     created_at: string;
   };
 
-  const searchKeyword = ref('');
+  // const searchKeyword = ref('');
+  const searchForm = useForm<{
+    searchKeyword?: string | null
+  }>({
+    searchKeyword: null
+  })
 
   // LaravelPagination<Customer> を使用
   const props = defineProps<{
     customers: LaravelPagination<Customer>;
+    keyword: string;
   }>();
 
   const searchByName = () => {
-    Inertia.get(route('customers.index', { keyword: searchKeyword.value}))
+    console.log(searchForm.searchKeyword)
+    searchForm.get(route('customers.index', { searchKeyword: searchForm.searchKeyword }))
   }
 
   onMounted(() => {
-    console.log(props.customers);
+    searchForm.searchKeyword = props.keyword //検索ワードを保持する
   })
 </script>
 
@@ -69,7 +74,16 @@
 
               </v-col>
               <v-col cols="3" class="d-flex">
-                <v-text-field
+                <form @submit.prevent class="w-100">
+                  <v-text-field density="compact" label="顧客検索" variant="solo" hide-details single-line v-model="searchForm.searchKeyword">
+                    <template #append-inner>
+                      <button @click="searchByName" type="submit" class="icon-button"> 
+                        <v-icon>mdi-magnify</v-icon>
+                      </button>
+                    </template> 
+                  </v-text-field>
+                </form>
+                <!-- <v-text-field
                   density="compact"
                   label="顧客検索"
                   variant="solo"
@@ -78,7 +92,7 @@
                   v-model="searchKeyword"
                 >
                 <template #append-inner>
-                    <Link :href="route('customers.index', { keyword: searchKeyword})">
+                    <Link :href="route('customers.index', { keyword: searchKeyword})" preserve-state>
                       <v-icon
                         class="cursor-pointer"
                       >
@@ -86,7 +100,7 @@
                       </v-icon>
                     </Link>
                   </template>
-                </v-text-field>
+                </v-text-field> -->
               </v-col>
             </v-row>
             <v-row class="justify-center">

@@ -16,7 +16,7 @@ class CustomerController extends Controller
      */
   public function index(Request $request)
   {
-    $keyword = $request->keyword ?? '';
+    $keyword = $request->searchKeyword ?? '';
 
     $customers = Customer::searchByName($keyword)
     ->select(
@@ -38,6 +38,7 @@ class CustomerController extends Controller
     // dd($customers);
     return Inertia::render('Customers/Index', [
       'customers' => $customers,
+      'keyword' => $keyword
     ]);
   }
 
