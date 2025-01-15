@@ -30,9 +30,9 @@
 
   // const searchKeyword = ref('');
   const searchForm = useForm<{
-    searchKeyword?: string | null
+    searchKeyword?: string
   }>({
-    searchKeyword: null
+    searchKeyword: ""
   })
 
   // LaravelPagination<Customer> を使用
