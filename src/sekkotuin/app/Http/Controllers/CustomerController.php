@@ -24,6 +24,7 @@ class CustomerController extends Controller
         DB::raw("CONCAT(last_name, ' ', first_name) AS full_name"),
         DB::raw("CONCAT(last_name_kana, ' ', first_name_kana) AS full_name_kana"),
         'created_at')
+    ->orderByDesc('id')
     ->paginate(10)
     ->withQueryString();
     // $customers2 = Customer::select(
