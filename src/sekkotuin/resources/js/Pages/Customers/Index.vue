@@ -6,20 +6,6 @@
   import { LaravelPagination } from '@/types/laravel';
   import Pagination from '@/Components/Pagination.vue';
   import { Link } from '@inertiajs/vue3';
-  
-  /* -------v-data-tableを使う場合--------- */
-  // import { DataTableHeader } from '@/types/vuetify';
-  // const props = defineProps<{
-  //   customers: {id: number, full_name: string, full_name_kana: string, created_at:string}[]
-  // }>()
-
-  // const headers:DataTableHeader[] = [
-  //   { title: 'ID', key: 'id' },
-  //   { title: '名前', key: 'full_name' },
-  //   { title: 'かな', key: 'full_name_kana' },
-  //   { title: '最終来院日', key: 'created_at' },
-  // ];
-  /* -------v-data-tableを使う場合--------- */
 
   // customers のデータ構造を定義
   type Customer = {
@@ -28,36 +14,34 @@
     full_name_kana: string;
     created_at: string;
   };
-
   // フォームの型を定義
   type SearchForm = {
     searchKeyword?: string;
   };
-
   type SortForm = {
     sortVal: 'asc' | 'desc';
   };
 
-
-  // const searchKeyword = ref('');
-  const searchForm = useForm<SearchForm>({
-    searchKeyword: ""
-  })
-
-  const sort = useForm<SortForm>({
-    sortVal: "desc"
-  })
-
-  const getSortIcon = () => {
-    return sort.sortVal === 'asc' ? "mdi-menu-up" : "mdi-menu-down";
-  }
-
+  // props管理
   // LaravelPagination<Customer> を使用
   const props = defineProps<{
     customers: LaravelPagination<Customer>;
     keyword: string;
     sort: 'asc' | 'desc';
   }>();
+
+  // フォームデータ管理
+  const searchForm = useForm<SearchForm>({
+    searchKeyword: ""
+  })
+  const sort = useForm<SortForm>({
+    sortVal: "desc"
+  })
+
+  // ソートアイコンの切り替え
+  const getSortIcon = () => {
+    return sort.sortVal === 'asc' ? "mdi-menu-up" : "mdi-menu-down";
+  }
 
   // 動的にクエリパラメータを生成
 const queryParams = computed(() => {
@@ -71,20 +55,20 @@ const queryParams = computed(() => {
   return params;
 });
 
+  // GET送信用関数
   const searchByName = () => {
-    console.log(searchForm.searchKeyword)
     searchForm.get(route('customers.index', queryParams.value))
   }
-
   const sortHandler = () => {
     sort.sortVal = sort.sortVal === "asc" ? "desc" : "asc";
 
     sort.get(route('customers.index', queryParams.value))
   }
 
+  // 画面マウント後処理
   onMounted(() => {
-    console.log(props.customers)
-    searchForm.searchKeyword = props.keyword //検索ワードを保持する
+    //検索ワードを保持する
+    searchForm.searchKeyword = props.keyword
     sort.sortVal = props.sort
   })
 </script>
@@ -121,36 +105,10 @@ const queryParams = computed(() => {
                     </template> 
                   </v-text-field>
                 </form>
-                <!-- <v-text-field
-                  density="compact"
-                  label="顧客検索"
-                  variant="solo"
-                  hide-details
-                  single-line
-                  v-model="searchKeyword"
-                >
-                <template #append-inner>
-                    <Link :href="route('customers.index', { keyword: searchKeyword})" preserve-state>
-                      <v-icon
-                        class="cursor-pointer"
-                      >
-                        mdi-magnify
-                      </v-icon>
-                    </Link>
-                  </template>
-                </v-text-field> -->
               </v-col>
             </v-row>
             <v-row class="justify-center">
               <v-col cols="12" md="10" lg="10" xl="10">
-                <!-- v-data-tableを使う場合---------
-                <v-data-table
-                  :items="customers"
-                  :headers="headers"
-                  item-key="id"
-                >
-                </v-data-table> 
-                v-data-tableを使う場合----------->
                 <v-table density="compact">
                   <thead>
                     <tr>
