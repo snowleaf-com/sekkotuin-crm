@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Customer extends Model
 {
@@ -19,7 +21,9 @@ class Customer extends Model
                 $query->where('last_name', 'LIKE', '%' . $keyword . '%')
                     ->orWhere('first_name', 'LIKE', '%' . $keyword . '%')
                     ->orWhere('last_name_kana', 'LIKE', '%' . $keyword . '%')
-                    ->orWhere('first_name_kana', 'LIKE', '%' . $keyword . '%');
+                    ->orWhere('first_name_kana', 'LIKE', '%' . $keyword . '%')
+                    ->orWhere(DB::raw("CONCAT(last_name, first_name)"), 'LIKE', '%' . $keyword . '%') // 苗字+名前
+                    ->orWhere(DB::raw("CONCAT(last_name_kana, first_name_kana)"), 'LIKE', '%' . $keyword . '%'); // 苗字カナ+名前カナ
             });
         }
 
