@@ -1,10 +1,11 @@
 <script setup lang="ts">
-  import { onMounted } from 'vue';
+  import { onMounted, computed } from 'vue';
   import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
   import { Head, useForm } from '@inertiajs/vue3';
   import dayjs from 'dayjs';
   import { LaravelPagination } from '@/types/laravel';
   import Pagination from '@/Components/Pagination.vue';
+  import { Link } from '@inertiajs/vue3';
   
   /* -------v-data-tableを使う場合--------- */
   // import { DataTableHeader } from '@/types/vuetify';
@@ -28,26 +29,63 @@
     created_at: string;
   };
 
+  // フォームの型を定義
+  type SearchForm = {
+    searchKeyword?: string;
+  };
+
+  type SortForm = {
+    sortVal: 'asc' | 'desc';
+  };
+
+
   // const searchKeyword = ref('');
-  const searchForm = useForm<{
-    searchKeyword?: string
-  }>({
+  const searchForm = useForm<SearchForm>({
     searchKeyword: ""
   })
+
+  const sort = useForm<SortForm>({
+    sortVal: "desc"
+  })
+
+  const getSortIcon = () => {
+    return sort.sortVal === 'asc' ? "mdi-menu-up" : "mdi-menu-down";
+  }
 
   // LaravelPagination<Customer> を使用
   const props = defineProps<{
     customers: LaravelPagination<Customer>;
     keyword: string;
+    sort: 'asc' | 'desc';
   }>();
+
+  // 動的にクエリパラメータを生成
+const queryParams = computed(() => {
+  const params:Record<string, string> = {}
+  if (searchForm.searchKeyword) {
+    params.searchKeyword = searchForm.searchKeyword;
+  }
+  if (sort.sortVal) {
+    params.sortVal = sort.sortVal;
+  }
+  return params;
+});
 
   const searchByName = () => {
     console.log(searchForm.searchKeyword)
-    searchForm.get(route('customers.index', { searchKeyword: searchForm.searchKeyword }))
+    searchForm.get(route('customers.index', queryParams.value))
+  }
+
+  const sortHandler = () => {
+    sort.sortVal = sort.sortVal === "asc" ? "desc" : "asc";
+
+    sort.get(route('customers.index', queryParams.value))
   }
 
   onMounted(() => {
+    console.log(props.customers)
     searchForm.searchKeyword = props.keyword //検索ワードを保持する
+    sort.sortVal = props.sort
   })
 </script>
 
@@ -119,7 +157,12 @@
                       <th class="text-left">ID</th>
                       <th class="text-right">名前</th>
                       <th class="text-right">かな</th>
-                      <th class="text-right">最終来院日</th>
+                      <th class="text-right">
+                        <button @click="sortHandler">
+                          最終来院日
+                          <v-icon>{{ getSortIcon() }}</v-icon>
+                        </button>
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
