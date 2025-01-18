@@ -106,6 +106,12 @@ const queryParams = computed(() => {
                   </v-text-field>
                 </form>
               </v-col>
+              <v-col cols="5">
+              </v-col>
+              <v-col cols="2"><Link :href="route('customers.create')"><v-btn color="blue" class="w-full">顧客登録</v-btn></Link>
+              </v-col>
+              <v-col cols="1">
+              </v-col>
             </v-row>
             <v-row class="justify-center">
               <v-col cols="12" md="10" lg="10" xl="10">
