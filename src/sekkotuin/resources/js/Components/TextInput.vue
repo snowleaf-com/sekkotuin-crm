@@ -6,6 +6,7 @@ const props = withDefaults(
 		label?: string;
     type?: string;
     icon?: string;
+    placeholder?: string;
   }>(),
   {
     type: 'text', // type のデフォルト値
@@ -27,5 +28,5 @@ defineExpose({ focus: () => input.value?.focus() });
 </script>
 
 <template>
-	<v-text-field :label="label" ref="input" v-model="model"  :prepend-inner-icon="icon" :type="type" variant="outlined"/>
+	<v-text-field :label="label" ref="input" v-model="model"  :prepend-inner-icon="icon" :type="type" variant="outlined" :placeholder="placeholder"/>
 </template>
