@@ -74,7 +74,7 @@ const queryParams = computed(() => {
 </script>
 
 <template>
-	<Head title="Dashboard" />
+	<Head title="顧客一覧" />
 
 	<AuthenticatedLayout>
 		<template #header>
