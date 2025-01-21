@@ -66,7 +66,25 @@ class CustomerController extends Controller
      */
     public function store(StoreCustomerRequest $request)
     {
-        //
+        // dd($request->all());
+        Customer::create([
+            'last_name' => $request->last_name, 
+            'first_name' => $request->first_name,
+            'last_name_kana' => $request->last_name_kana, 
+            'first_name_kana' => $request->first_name_kana, 
+            'postcode' => $request->postcode, 
+            'address' => $request->address, 
+            'tel' => $request->tel, 
+            'birth' => $request->birth, 
+            'gender' => $request->gender, 
+            'memo' => $request->memo, 
+        ]);
+
+        // return Inertia::render('Customers/Index', []);
+        return to_route('customers.index')->with([
+            'message' => '登録が完了しました！',
+            'status' => 'success',
+        ]);
     }
 
     /**

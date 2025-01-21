@@ -6,6 +6,7 @@
   import { LaravelPagination } from '@/types/laravel';
   import Pagination from '@/Components/Pagination.vue';
   import { Link } from '@inertiajs/vue3';
+  import FlashMessage from '@/Components/FlashMessage.vue';
 
   // customers のデータ構造を定義
   type Customer = {
@@ -90,6 +91,7 @@ const queryParams = computed(() => {
 				<div
 					class="overflow-hidden bg-white shadow-lg sm:rounded-lg dark:bg-gray-800"
 				>
+          <FlashMessage />
           <v-container>
             <v-row>
               <v-col cols="1">

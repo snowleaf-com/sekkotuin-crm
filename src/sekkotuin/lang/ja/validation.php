@@ -175,7 +175,11 @@ return [
 		'email' => 'メールアドレス',
 		'postcode' => '郵便番号',
 		'address' => '住所',
-		'birthday' => '誕生日',
+		'birth' => '誕生日',
 		'gender' => '性別',
+		'last_name' => '姓',
+		'first_name' => '名前',
+		'last_name_kana' => '姓カナ',
+		'first_name_kana' => '名カナ',
 	],
 ];
