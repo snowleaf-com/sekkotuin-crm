@@ -1,13 +1,15 @@
 <script setup lang="ts">
   import { usePage } from '@inertiajs/vue3';
+  import { ref } from 'vue';
 
   const flash = usePage().props.flash;
+
+  // 初期状態でSnackbarを表示するかどうかを設定
+  const isSnackbarVisible = ref(flash?.status === 'success');
+
 </script>
 <template>
-  <v-snackbar v-if="flash?.status === 'success'">
-    {{ flash.message }}
-  </v-snackbar>
-  <!-- <div v-if="flash?.status === 'success'">
+  <v-snackbar v-model="isSnackbarVisible" color="success" location="top end" timeout="3000">
     {{ flash?.message }}
-  </div> -->
+  </v-snackbar>
 </template>
