@@ -9,7 +9,7 @@
 
 </script>
 <template>
-  <v-snackbar v-model="isSnackbarVisible" color="success" location="top end" timeout="3000">
+  <v-snackbar v-model="isSnackbarVisible" color="success" location="top center" timeout="2500">
     {{ flash?.message }}
   </v-snackbar>
 </template>
