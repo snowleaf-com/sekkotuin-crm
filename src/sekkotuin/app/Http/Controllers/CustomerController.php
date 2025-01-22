@@ -26,9 +26,9 @@ class CustomerController extends Controller
         DB::raw("CONCAT(last_name_kana, ' ', first_name_kana) AS full_name_kana"),
         'created_at')
     ->when($sort === 'asc', function ($query) {
-        $query->orderBy('created_at', 'asc');
+        $query->orderBy('created_at', 'asc')->orderBy('id', 'asc');
     }, function ($query) {
-        $query->orderBy('created_at', 'desc');
+        $query->orderBy('created_at', 'desc')->orderBy('id', 'desc');
     })
     ->paginate(10)
     ->withQueryString();
