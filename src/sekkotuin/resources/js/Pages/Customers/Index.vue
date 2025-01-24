@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import { onMounted, computed } from 'vue';
   import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-  import { Head, useForm } from '@inertiajs/vue3';
+  import { Head, useForm, router } from '@inertiajs/vue3';
   import dayjs from 'dayjs';
   import { LaravelPagination } from '@/types/laravel';
   import Pagination from '@/Components/Pagination.vue';
@@ -66,6 +66,11 @@ const queryParams = computed(() => {
     sort.get(route('customers.index', queryParams.value))
   }
 
+  // 編集画面へ遷移（TODO:詳細画面へ遷移に変える）
+  const goToCustomerEdit = (id: number) => {
+    router.get(route('customers.edit', { customer: id }))
+  }
+
   // 画面マウント後処理
   onMounted(() => {
     //検索ワードを保持する
@@ -117,7 +122,7 @@ const queryParams = computed(() => {
             </v-row>
             <v-row class="justify-center">
               <v-col cols="12" md="10" lg="10" xl="10">
-                <v-table density="compact">
+                <v-table density="compact" class="custom-table">
                   <thead>
                     <tr>
                       <th class="text-left">ID</th>
@@ -133,7 +138,7 @@ const queryParams = computed(() => {
                   </thead>
                   <tbody>
                     <tr
-                      v-for="item in customers.data" :key="item.id">
+                    v-for="item in customers.data" :key="item.id" @click="goToCustomerEdit(item.id)" class="hoverable-row">
                       <td>{{ item.id }}</td>
                       <td class="text-right">{{ item.full_name }}</td>
                       <td class="text-right">{{ item.full_name_kana }}</td>
@@ -150,3 +155,10 @@ const queryParams = computed(() => {
 		</div>
 	</AuthenticatedLayout>
 </template>
+
+<style scoped>
+.custom-table .hoverable-row:hover {
+  background-color: #e6f7ff;
+  cursor: pointer;
+}
+</style>
