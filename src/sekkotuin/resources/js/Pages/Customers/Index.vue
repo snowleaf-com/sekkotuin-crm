@@ -67,8 +67,8 @@ const queryParams = computed(() => {
   }
 
   // 編集画面へ遷移（TODO:詳細画面へ遷移に変える）
-  const goToCustomerEdit = (id: number) => {
-    router.get(route('customers.edit', { customer: id }))
+  const goToCustomerShow = (id: number) => {
+    router.get(route('customers.show', { customer: id }))
   }
 
   // 画面マウント後処理
@@ -138,7 +138,7 @@ const queryParams = computed(() => {
                   </thead>
                   <tbody>
                     <tr
-                    v-for="item in customers.data" :key="item.id" @click="goToCustomerEdit(item.id)" class="hoverable-row">
+                    v-for="item in customers.data" :key="item.id" @click="goToCustomerShow(item.id)" class="hoverable-row">
                       <td>{{ item.id }}</td>
                       <td class="text-right">{{ item.full_name }}</td>
                       <td class="text-right">{{ item.full_name_kana }}</td>
