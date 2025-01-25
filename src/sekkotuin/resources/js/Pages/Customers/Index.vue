@@ -66,7 +66,7 @@ const queryParams = computed(() => {
     sort.get(route('customers.index', queryParams.value))
   }
 
-  // 編集画面へ遷移（TODO:詳細画面へ遷移に変える）
+  // 詳細画面へ遷移
   const goToCustomerShow = (id: number) => {
     router.get(route('customers.show', { customer: id }))
   }
