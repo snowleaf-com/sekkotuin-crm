@@ -1,7 +1,8 @@
 <script setup lang="ts">
   import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
   import { Head, useForm, router } from '@inertiajs/vue3';
-import DisplayTextField from '@/Components/DisplayTextField.vue';
+  import DisplayTextField from '@/Components/DisplayTextField.vue';
+  import { ref } from 'vue';
 
   // customers のデータ構造を定義
   type Customer = {
@@ -34,17 +35,20 @@ import DisplayTextField from '@/Components/DisplayTextField.vue';
     memo: props.customer.memo,
   })
 
+  const dialog = ref<boolean>(false);
+
   const goToCustomerEdit = () => {
     router.get(route('customers.edit', {
       'customer': customerForm.id
     }))
   }
   
-  // const deleteCustomer = () => {
-  //   customerForm.delete(route('customers.destroy', {
-  //     'customer' : customerForm.id
-  //   }))
-  // }
+  const goToCustomerDelete = () => {
+    customerForm.delete(route('customers.destroy', {
+      'customer' : customerForm.id
+    }))
+    dialog.value = false
+  }
 
 </script>
 <template>
@@ -169,10 +173,23 @@ import DisplayTextField from '@/Components/DisplayTextField.vue';
             <v-row>
               <v-col lg="3"></v-col>
               <v-col md="12" lg="6" cols="12">
-                <v-btn color="red-darken-1 w-full" class="text-none" rounded="xs" size="x-large" variant="flat">削除する</v-btn>
+                <v-btn color="red-darken-1 w-full" class="text-none" rounded="xs" size="x-large" variant="flat" @click="dialog = true">削除する</v-btn>
               </v-col>
             </v-row>
           </v-container>
+              <v-dialog v-model="dialog" max-width="400px">
+                <v-card>
+                  <v-card-title class="text-h6">本当に削除しますか？</v-card-title>
+                  <v-card-text>この操作は元に戻せません。</v-card-text>
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <!-- キャンセルボタン -->
+                    <v-btn @click="dialog = false">キャンセル</v-btn>
+                    <!-- 削除確認ボタン -->
+                    <v-btn color="red-darken-1" class="text-none" variant="flat" @click="goToCustomerDelete">削除</v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-dialog>
         </div>
       </div>
     </div>
