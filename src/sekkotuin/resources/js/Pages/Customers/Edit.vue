@@ -191,7 +191,7 @@
                   class="block w-full"
                   autocomplete="メモ"
                   />
-                  <v-btn :disabled="customerForm.processing" color="blue-darken-1" type="submit" class="text-none" rounded="xs" size="x-large" variant="flat" block>登録する</v-btn>
+                  <v-btn :disabled="customerForm.processing" color="blue-darken-1" type="submit" class="text-none" rounded="xs" size="x-large" variant="flat" block>変更する</v-btn>
                 </form>
               </v-col>
             </v-row>
