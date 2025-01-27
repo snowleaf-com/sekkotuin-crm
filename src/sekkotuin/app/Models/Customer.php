@@ -2,11 +2,15 @@
 
 namespace App\Models;
 
+use App\Models\Scopes\CustomerActiveScope;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 
+
+#[ScopedBy([CustomerActiveScope::class])]
 class Customer extends Model
 {
     /** @use HasFactory<\Database\Factories\CustomerFactory> */

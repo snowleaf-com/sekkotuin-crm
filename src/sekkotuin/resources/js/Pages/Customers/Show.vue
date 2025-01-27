@@ -1,7 +1,9 @@
 <script setup lang="ts">
   import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
   import { Head, useForm, router } from '@inertiajs/vue3';
-import DisplayTextField from '@/Components/DisplayTextField.vue';
+  import DisplayTextField from '@/Components/DisplayTextField.vue';
+  import { ref } from 'vue';
+import ConfirmDeleteDialog from '@/Components/ConfirmDeleteDialog.vue';
 
   // customers のデータ構造を定義
   type Customer = {
@@ -34,17 +36,20 @@ import DisplayTextField from '@/Components/DisplayTextField.vue';
     memo: props.customer.memo,
   })
 
+  const dialog = ref<boolean>(false);
+
   const goToCustomerEdit = () => {
     router.get(route('customers.edit', {
       'customer': customerForm.id
     }))
   }
   
-  // const deleteCustomer = () => {
-  //   customerForm.delete(route('customers.destroy', {
-  //     'customer' : customerForm.id
-  //   }))
-  // }
+  const goToCustomerDelete = () => {
+    customerForm.delete(route('customers.destroy', {
+      'customer' : customerForm.id
+    }))
+    dialog.value = false
+  }
 
 </script>
 <template>
@@ -169,10 +174,12 @@ import DisplayTextField from '@/Components/DisplayTextField.vue';
             <v-row>
               <v-col lg="3"></v-col>
               <v-col md="12" lg="6" cols="12">
-                <v-btn color="red-darken-1 w-full" class="text-none" rounded="xs" size="x-large" variant="flat">削除する</v-btn>
+                <v-btn color="red-darken-1 w-full" class="text-none" rounded="xs" size="x-large" variant="flat" @click="dialog = true">削除する</v-btn>
               </v-col>
             </v-row>
           </v-container>
+          <ConfirmDeleteDialog v-model:visible="dialog"
+          @confirm="goToCustomerDelete" />
         </div>
       </div>
     </div>

@@ -137,6 +137,12 @@ class CustomerController extends Controller
      */
     public function destroy(Customer $customer)
     {
-        //
+        $customer->delete_flg = 1;
+        $customer->save();
+
+        return to_route('customers.index')->with([
+            'message' => '削除が完了しました！',
+            'status' => 'success',
+        ]);
     }
 }
