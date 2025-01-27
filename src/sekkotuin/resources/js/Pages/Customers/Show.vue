@@ -3,6 +3,7 @@
   import { Head, useForm, router } from '@inertiajs/vue3';
   import DisplayTextField from '@/Components/DisplayTextField.vue';
   import { ref } from 'vue';
+import ConfirmDeleteDialog from '@/Components/ConfirmDeleteDialog.vue';
 
   // customers のデータ構造を定義
   type Customer = {
@@ -177,19 +178,8 @@
               </v-col>
             </v-row>
           </v-container>
-              <v-dialog v-model="dialog" max-width="400px">
-                <v-card>
-                  <v-card-title class="text-h6">本当に削除しますか？</v-card-title>
-                  <v-card-text>この操作は元に戻せません。</v-card-text>
-                  <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <!-- キャンセルボタン -->
-                    <v-btn @click="dialog = false">キャンセル</v-btn>
-                    <!-- 削除確認ボタン -->
-                    <v-btn color="red-darken-1" class="text-none" variant="flat" @click="goToCustomerDelete">削除</v-btn>
-                  </v-card-actions>
-                </v-card>
-              </v-dialog>
+          <ConfirmDeleteDialog v-model:visible="dialog"
+          @confirm="goToCustomerDelete" />
         </div>
       </div>
     </div>
