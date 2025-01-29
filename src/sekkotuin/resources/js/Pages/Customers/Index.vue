@@ -71,6 +71,11 @@ const queryParams = computed(() => {
     router.get(route('customers.show', { customer: id }))
   }
 
+  // 検索結果クリア
+  const resetSearch = () => {
+    router.get(route('customers.index'))
+  }
+
   // 画面マウント後処理
   onMounted(() => {
     //検索ワードを保持する
@@ -113,9 +118,12 @@ const queryParams = computed(() => {
                   </v-text-field>
                 </form>
               </v-col>
-              <v-col cols="5">
+              <v-col cols="2" class="d-flex justify-center align-center">
+                <v-btn variant="text" size="small" @click="resetSearch">検索結果をクリア</v-btn>
               </v-col>
-              <v-col cols="2"><Link :href="route('customers.create')"><v-btn color="blue" class="w-full">顧客登録</v-btn></Link>
+              <v-col cols="3">
+              </v-col>
+              <v-col cols="2"><Link :href="route('customers.create')"><v-btn color="blue" class="w-full d-flex justify-center align-center">顧客登録</v-btn></Link>
               </v-col>
               <v-col cols="1">
               </v-col>
