@@ -49,13 +49,15 @@
 	<Head title="顧客登録" />
 
 	<AuthenticatedLayout>
-		<template #header>
-			<h2
-				class="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200"
-			>
-				顧客登録
-			</h2>
-		</template>
+    <template #header>
+      <v-btn variant="text" @click="">
+        <v-icon class="mr-2">mdi-chevron-left</v-icon>
+        戻る
+      </v-btn>
+      <h2 class="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200 text-center">
+        顧客登録
+      </h2>
+    </template>
 
 		<div class="mb-10">
 			<div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
