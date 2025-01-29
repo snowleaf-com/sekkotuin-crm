@@ -3,7 +3,7 @@
   import { Head, useForm, router } from '@inertiajs/vue3';
   import DisplayTextField from '@/Components/DisplayTextField.vue';
   import { ref } from 'vue';
-import ConfirmDeleteDialog from '@/Components/ConfirmDeleteDialog.vue';
+  import ConfirmDeleteDialog from '@/Components/ConfirmDeleteDialog.vue';
 
   // customers のデータ構造を定義
   type Customer = {
