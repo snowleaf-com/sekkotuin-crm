@@ -20,7 +20,13 @@
     memo: string;
   };
 
-  const props = defineProps<{ customer: Customer }>();
+  type Query = {
+    page?: number;
+    sortVal?: 'asc' | 'desc';
+    searchKeyword?: string;
+  }
+
+  const props = defineProps<{ customer: Customer, query: Query}>();
 
   const customerForm = useForm<Customer>({
     id: props.customer.id,
@@ -51,6 +57,12 @@
     dialog.value = false
   }
 
+  const goBack = () => {
+    router.get(route('customers.index', {
+      ...props.query
+    }))
+  }
+
 </script>
 <template>
 	<Head title="顧客詳細" />
@@ -58,7 +70,7 @@
 	<AuthenticatedLayout>
     
     <template #header>
-      <v-btn variant="text" @click="">
+      <v-btn variant="text" @click="goBack">
         <v-icon class="mr-2">mdi-chevron-left</v-icon>
         戻る
       </v-btn>

@@ -7,6 +7,7 @@
   import Pagination from '@/Components/Pagination.vue';
   import { Link } from '@inertiajs/vue3';
   import FlashMessage from '@/Components/FlashMessage.vue';
+  import { route } from '../../../../vendor/tightenco/ziggy/src/js';
 
   // customers のデータ構造を定義
   type Customer = {
@@ -66,9 +67,12 @@ const queryParams = computed(() => {
     sort.get(route('customers.index', queryParams.value))
   }
 
+  // 現在のページを取得する
+  const page = route().params.page;
+  
   // 詳細画面へ遷移
   const goToCustomerShow = (id: number) => {
-    router.get(route('customers.show', { customer: id }))
+    router.get(route('customers.show', { customer: id, ...queryParams.value, page }))
   }
 
   // 検索結果クリア
